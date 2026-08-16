@@ -11,3 +11,44 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum TipoRefeicao {
+  CAFE_DA_MANHA
+  ALMOCO
+  JANTAR
+  CEIA
+  LANCHE
+}
+
+model Alimento {
+  id                  Int      @id @default(autoincrement())
+  nomeAlimento        String
+  nomeBusca           String
+  porcaoReferenciaG   Float  
+  kcal                Float  
+  carboidrato         Float  
+  proteina            Float  
+  gordura             Float  
+  refeicoes           Refeicao[]
+}
+
+model MetaDiaria {
+  id           Int     @id @default(autoincrement())
+  kcal         Float 
+  carboidrato  Float 
+  proteina     Float 
+  gordura      Float 
+}
+
+model Refeicao {
+  id                    Int      @id @default(autoincrement())
+  alimentoId            Int
+  alimento              Alimento @relation(fields: [alimentoId], references: [id])
+  quantidadeG           Float  
+  tipoRefeicao           String
+  dataHora              DateTime
+  kcalCalculado         Float  
+  carboidratoCalculado  Float 
+  proteinaCalculado     Float  
+  gorduraCalculado      Float  
+}
