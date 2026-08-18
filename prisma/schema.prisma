@@ -45,7 +45,7 @@ model Refeicao {
   alimentoId            Int
   alimento              Alimento @relation(fields: [alimentoId], references: [id])
   quantidadeG           Float  
-  tipoRefeicao           String
+  tipoRefeicao          TipoRefeicao
   dataHora              DateTime
   kcalCalculado         Float  
   carboidratoCalculado  Float 
