@@ -1,6 +1,6 @@
 import { normalizarTexto } from "./normalizarTexto.js"
 const regex = /^(.+)\s+(\d+)$/
-function parse(mensagem) {
+export function parse(mensagem) {
 
     const dados = mensagem.split("\n").map((m) => {
         const formatacaoM = m.trim()
@@ -17,12 +17,8 @@ function parse(mensagem) {
     const validos = dados.filter(item => item.erro !== true)
 
     if (erros.length > 0) {
-        return erros // ou as mensagens deles
+        return erros 
     }
     return validos
 }
 
-
-
-
-console.log(parse("Carne Moída    150 \nfeijao 100"))
