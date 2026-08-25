@@ -9,20 +9,14 @@ const mapaTipoRefeicao = {
 }
 export function extrairTipoRefeicao(mensagem) {
     const dados = mensagem.split("\n")
-    const refeicao = dados.shift()
-    const dadosMensagem = {
-        alimentos: dados,
-        TipoRefeicao: normalizarTexto(refeicao.trim())
-    }
-    const refeicaoNormalizada = dadosMensagem.TipoRefeicao
+    const refeicaoTexto = dados.shift()
+    const refeicaoNormalizada = normalizarTexto(refeicaoTexto.trim())
     const tipoRefeicao = mapaTipoRefeicao[refeicaoNormalizada]
     if (!tipoRefeicao) {
-        return { erro: true, mensagem: "tipo de refeição inválido" }
+        return { erro: true, erros: [{ message: "Tipo de refeição inválido" }] }
     }
     return {
-        alimentos: dadosMensagem.alimentos.join("\n"),
+        alimentos: dados.join("\n"),
         refeicao: tipoRefeicao
     }
 }
-
-
