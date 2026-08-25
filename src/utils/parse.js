@@ -14,11 +14,7 @@ export function parse(texto) {
     })
     const erros = dados.filter(item => item.erro === true)
     const validos = dados.filter(item => item.erro !== true)
-
-    if (erros.length > 0) {
-        return erros
-    }
-    return validos
+    return { validos, erros }
 }
 
 
