@@ -5,18 +5,26 @@ import { parse } from "../utils/parse";
 import { agregacaoService } from "../services/agregacaoService";
 
 
-async function processarRefeicao(mensagem) {
+export async function processarRefeicao(mensagem) {
     const refeicao = extrairTipoRefeicao(mensagem)
+    if (refeicao.erro === true) {
+        return { resultado: null, erros: refeicao.erros }
+    }
     const alimentosTexto = refeicao.alimentos
     const tipoRefeicao = refeicao.refeicao
     const alimentos = parse(alimentosTexto)
-    const tabelaNutricionalAlimento = await calcularMacros(alimentos)
-    const validos = tabelaNutricionalAlimento.validos
-    const erros = tabelaNutricionalAlimento.erros
-    if (validos.length === 0) {
-        return { resultado: null, erros }
+    const validosAlimentos = alimentos.validos
+    const errosAlimentos = alimentos.erros
+    if (validosAlimentos.length === 0) {
+        return { resultado: null, erros: errosAlimentos }
     }
-    await salvarRefeicao(validos, tipoRefeicao)
+    const tabelaNutricionalAlimento = await calcularMacros(validosAlimentos)
+    const validosTabela = tabelaNutricionalAlimento.validos
+    const errosTabela = tabelaNutricionalAlimento.erros
+    if (validosTabela.length === 0) {
+        return { resultado: null, erros: [...errosAlimentos, ...errosTabela] }
+    }
+    await salvarRefeicao(validosTabela, tipoRefeicao)
     const resultado = await agregacaoService()
-    return { resultado, erros }
+    return { resultado, erros: [...errosAlimentos, ...errosTabela] }
 }
