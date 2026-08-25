@@ -40,10 +40,6 @@ export async function calcularMacros(itens) {
     })
     const erros = resultados.filter(item => item.erro === true)
     const validos = resultados.filter(item => item.erro !== true)
-    if (erros.length > 0) {
-        return erros
-
-    }
-    return validos
+    return{validos,erros}
 
 }
