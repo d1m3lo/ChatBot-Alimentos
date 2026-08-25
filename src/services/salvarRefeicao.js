@@ -22,9 +22,5 @@ export async function salvarRefeicao(validos, tipoRefeicao) {
         }
     })
     await prisma.refeicao.createMany({ data: dados })
-    console.log("Refeição inserida.")
 }
 
-salvarRefeicao()
-    .catch((e) => console.error(e))
-    .finally(async () => await prisma.$disconnect())
