@@ -42,7 +42,6 @@ export async function agregacaoService() {
         proteina: 0,
         gordura: 0
     })
-    console.log(totalConsumido)
     const respostaKcal = verificarMacro(totalConsumido.kcal, metaDiaria.kcal, "kcal")
     const respostaCarbo = verificarMacro(totalConsumido.carboidrato, metaDiaria.carboidrato, "g")
     const respostaProteina = verificarMacro(totalConsumido.proteina, metaDiaria.proteina, "g")
@@ -73,4 +72,3 @@ export async function agregacaoService() {
     }
 }
 
-agregacaoService()
